@@ -1,9 +1,13 @@
 require 'sinatra'
+require 'haml'
+
+set :haml, :format => :html5
 
 get '/' do
-  "Hello World!"
+  haml :index, :locals => {:articles => Article.order_by([:nr, :desc]).all}
 end
 
-get '/list' do
-  Article.all.to_a.inspect
+get '/list.json' do
+  content_type :json
+  Article.all.to_json
 end

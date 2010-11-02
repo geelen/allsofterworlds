@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: black;
+  background-color: #eeeeee;
+  font: 16px/1.5 "Helvetica Neue", arial, sans-serif;
+  font-weight: 200;
+  padding: 0 12px;
+}
+
+.article {
+  padding-bottom: 4em;
+  width: 720px;
+}
+
+.article .heading {
+  float: left;
+}
+
+.article .alt_text {
+  float: right;
+}

@@ -1,0 +1,12 @@
+!!!
+%html
+  %head{:lang => 'en'}
+    %meta{:charset => 'utf-8'}
+    %link{:rel => 'stylesheet', :href => "allsofterworlds.css"}
+    %title All Softer Worlds
+  %body
+    - articles.each do |article|
+      %section[article]
+        %img{:src => "http://asofterworld.com/#{article.image_url}"}
+        %p.heading= article.nr
+        %p.alt_text= article.alt_text
