@@ -28,3 +28,19 @@ a:hover {
     float: left; }
   .article .alt_text {
     text-align: center; }
+
+#content ul.spinner {
+  display: none; }
+
+#content.loading ul.spinner {
+  display: block; }
+
+ul.spinner {
+  width: 181px;
+  margin: 0 auto;
+  margin-bottom: 1em; }
+  ul.spinner li {
+    display: inline-block;
+    list-style-type: none; }
+    ul.spinner li img {
+      display: block; }
