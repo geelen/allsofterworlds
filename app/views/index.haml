@@ -9,5 +9,7 @@
     - articles.each do |article|
       %section[article]
         %img{:src => "http://asofterworld.com/#{article.image_url}", :title => article.alt_text}
-        %p.heading= "##{article.nr}"
+        %p.heading
+          %a.original{:href => "http://asofterworld.com/index.php?id=#{article.nr}"}
+            = "##{article.nr}"
         %p.alt_text= article.alt_text

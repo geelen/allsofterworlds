@@ -11,8 +11,14 @@ body {
   padding: 0 12px;
 }
 
-img {
-  border: solid 2px #f8f8f8;
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  border-bottom: #444 1px dotted;
+  color: black;
 }
 
 .article {
@@ -20,6 +26,10 @@ img {
   margin: 0 auto;
   padding: 1em 0 3em;
   border-top: #777777 1px dotted;
+}
+
+article img {
+  border: solid 2px #f8f8f8;
 }
 
 .article .heading {
