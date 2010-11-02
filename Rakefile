@@ -14,8 +14,8 @@ task :update do
   end
   puts "Newest article online is #{newest}"
 
-  # Find the highest-numbered article we've already got, or assume 0
-  latest_already_processed = Article.desc(:nr).first.try(:nr) || 0
+  # Find the highest-numbered article we've already got
+  latest_already_processed = Article.latest_nr
   puts "The latest article we have is #{latest_already_processed}"
   puts ""
 
