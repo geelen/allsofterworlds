@@ -2,11 +2,12 @@
 %html
   %head{:lang => 'en'}
     %meta{:charset => 'utf-8'}
+    -#%meta{:content => 'width = 720', :name => "viewport"}
     %link{:rel => 'stylesheet', :href => "allsofterworlds.css"}
     %title All Softer Worlds
   %body
     - articles.each do |article|
       %section[article]
-        %img{:src => "http://asofterworld.com/#{article.image_url}"}
-        %p.heading= article.nr
+        %img{:src => "http://asofterworld.com/#{article.image_url}", :title => article.alt_text}
+        %p.heading= "##{article.nr}"
         %p.alt_text= article.alt_text

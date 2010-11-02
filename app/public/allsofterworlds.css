@@ -11,9 +11,15 @@ body {
   padding: 0 12px;
 }
 
+img {
+  border: solid 2px #f8f8f8;
+}
+
 .article {
-  padding-bottom: 4em;
-  width: 720px;
+  width: 724px;
+  margin: 0 auto;
+  padding: 1em 0 3em;
+  border-top: #777777 1px dotted;
 }
 
 .article .heading {
@@ -21,5 +27,5 @@ body {
 }
 
 .article .alt_text {
-  float: right;
+  text-align: center;
 }
