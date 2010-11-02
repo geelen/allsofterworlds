@@ -2,7 +2,8 @@ require 'mongoid'
 
 Mongoid.configure do |config|
   if ENV['RAILS_ENV'] == 'production'
-    config.master = Mongo::Connection.from_uri(ENV['MONGOHQ_URL']).db("allsofterworlds")
+    require 'uri'
+    config.master = Mongo::Connection.from_uri(ENV['MONGOHQ_URL']).db(URI.parse(ENV['MONGOHQ_URL']).path.gsub(/^\//, ''))
   else
     config.master = Mongo::Connection.new.db("allsofterworlds")
   end
