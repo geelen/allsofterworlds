@@ -4,7 +4,7 @@ require 'haml'
 set :haml, :format => :html5
 
 get '/' do
-  haml :index, :locals => {:articles => Article.order_by([:nr, :desc]).all}
+  haml :index, :locals => {:articles => Article.order_by([:nr, :desc]).limit(20)}
 end
 
 get '/list.json' do
