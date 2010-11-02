@@ -10,13 +10,6 @@
     #content
       = haml :articles, :locals => {:articles => articles}
       %ul.spinner
-        %li.banana
-          %img{:src => '/images/pjb-banana.gif'}
-        %li.banana
-          %img{:src => '/images/pjb-banana.gif'}
-        %li.banana
-          %img{:src => '/images/pjb-banana.gif'}
-        %li.banana
-          %img{:src => '/images/pjb-banana.gif'}
-        %li.banana
-          %img{:src => '/images/pjb-banana.gif'}
+        - 5.times do
+          %li.banana
+            %img{:src => '/images/pjb-banana.gif'}
