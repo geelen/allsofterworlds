@@ -4,12 +4,14 @@ require 'haml'
 set :haml, :format => :html5
 
 get '/' do
-  haml :index, :locals => {:articles => Article.order_by([:nr, :desc]).limit(20)}
+  haml :index, :locals => {:articles => articles}
 end
 
-get '/articles.json' do
-  content_type :json
+get '/articles' do
+  from = params['from'].try(:to_i)
+  haml :articles, :locals => {:articles => articles(from)}
+end
 
-  from = params['from'].try(:to_i) || Article.latest_nr
-  Article.order_by([:nr,:desc]).where(:nr.lte => from).limit(20).to_json
+def articles(from = Article.latest_nr)
+  Article.order_by([:nr,:desc]).where(:nr.lte => from).limit(20)
 end

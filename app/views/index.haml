@@ -2,7 +2,9 @@
 %html
   %head{:lang => 'en'}
     %meta{:charset => 'utf-8'}
-    %link{:rel => 'stylesheet', :href => "allsofterworlds.css"}
+    %link{:rel => 'stylesheet', :href => "styles/allsofterworlds.css"}
+    %script{:src => 'scripts/jquery-1.4.3.min.js', :type => 'text/javascript'}
     %title All Softer Worlds
   %body
     #content
+      = haml :articles, :locals => {:articles => articles}

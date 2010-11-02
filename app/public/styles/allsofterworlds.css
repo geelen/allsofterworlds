@@ -14,7 +14,7 @@ a {
   color: black; }
 
 a:hover {
-  border-bottom: #444 1px dotted;
+  border-bottom: #444444 1px dotted;
   color: black; }
 
 .article {
@@ -22,12 +22,9 @@ a:hover {
   margin: 0 auto;
   padding: 1em 0 3em;
   border-top: #777777 1px dotted; }
-
-article img {
-  border: solid 2px #f8f8f8; }
-
-.article .heading {
-  float: left; }
-
-.article .alt_text {
-  text-align: center; }
+  .article img {
+    border: solid 2px #f8f8f8; }
+  .article .heading {
+    float: left; }
+  .article .alt_text {
+    text-align: center; }
