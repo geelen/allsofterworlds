@@ -25,7 +25,8 @@ namespace :update do
     (latest_already_processed + 1).upto(newest) do |nr|
       puts "Fetching article #{nr}:"
       # Grab the HTML
-      article_doc = open("http://asofterworld.com/index.php?id=#{nr}") { |f| Hpricot(f) }
+      original_url = "http://asofterworld.com/index.php?id=#{nr}"
+      article_doc = open() { |f| Hpricot(f) }
       # Extract the image element
       img = article_doc / '.rss-content img:first'
       # Get the image source
@@ -35,7 +36,10 @@ namespace :update do
       alt_text = img.attr('title')
       puts "  Alt Text: #{alt_text}"
       # Store the result
-      Article.create!(:nr => nr, :image_url => image_url, :alt_text => alt_text)
+      Article.create!(:nr => nr, :site => Sites::SOFTER_WORLD,
+                      :images => [Image.new(:image_url => "http://asofterworld.com/#{image_url}",
+                                            :alt_text => alt_text,
+                                            :original_url => original_url)])
     end
   end
 
@@ -68,6 +72,6 @@ namespace :update do
     end
 
     puts "  Found #{images.length} images"
-    Article.create!(:nr => nr + 1, :images => images)
+    Article.create!(:nr => nr + 1, :site => Sites::OGLAF, :images => images)
   end
 end

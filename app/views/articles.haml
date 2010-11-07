@@ -1,6 +1,6 @@
 - articles.each do |article|
   %section[article]
-    %img{:src => "http://asofterworld.com/#{article.image_url}", :title => article.alt_text}
+    %img{:src => "{article.image_url}", :title => article.alt_text}
     %p.heading
       %a.original{:href => "http://asofterworld.com/index.php?id=#{article.nr}"}
         = "##{article.nr}"
