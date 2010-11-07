@@ -7,7 +7,7 @@ loadMoreContent = ->
   if !$('#content').hasClass('loading')
     $('#content').addClass('loading')
     from = $('.article:last').attr('data_nr').replace(/\D/g, '')
-    $.get "${window.location.pathname}/articles?from=${parseInt(from) - 1}", {}, (data, textStatus) ->
+    $.get "${window.location.pathname}/articles?from=${parseInt(from) + 1}", {}, (data, textStatus) ->
       if textStatus == 'success'
         $('#content .spinner').before(data)
       else

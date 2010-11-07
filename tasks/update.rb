@@ -7,7 +7,7 @@ namespace :update do
   end
 
   desc "A Softer World"
-  task :asofterworlds => :requires do
+  task :asofterworld => :requires do
     # We fetch the home page to find out what the latest article is
     doc = open("http://asofterworld.com/") { |f| Hpricot(f) }
     title = (doc / 'title').inner_text
@@ -18,7 +18,7 @@ namespace :update do
     puts "Newest article online is #{newest}"
 
     # Find the highest-numbered article we've already got
-    latest_already_processed = Article.latest_nr
+    latest_already_processed = Article.latest_nr(Sites::SOFTER_WORLD)
     puts "The latest article we have is #{latest_already_processed}"
     puts ""
 
@@ -26,7 +26,7 @@ namespace :update do
       puts "Fetching article #{nr}:"
       # Grab the HTML
       original_url = "http://asofterworld.com/index.php?id=#{nr}"
-      article_doc = open() { |f| Hpricot(f) }
+      article_doc = open(original_url) { |f| Hpricot(f) }
       # Extract the image element
       img = article_doc / '.rss-content img:first'
       # Get the image source
@@ -48,28 +48,34 @@ namespace :update do
     rss = open("http://oglaf.com/feeds/rss/") { |f| Hpricot(f) }
     articles = (rss / 'item guid').map(&:inner_text).reverse
 
-    # for now, just run the very first one
     articles.each_with_index do |article_url, nr|
       name = article_url.split('/').last
-      puts "Processing article nr #{nr + 1}: #{name}"
+      if Article.where(:nr => nr + 1, :site => Sites::OGLAF).first
+        puts "Already processed article nr #{nr + 1}: #{name}"
+      else
+        puts "Processing article nr #{nr + 1}: #{name}"
 
-      finished = false
-      images = []
-      while !finished
-        begin
-          original_url = "#{article_url}#{images.length + 1}"
-          article_doc = open(original_url) { |f| Hpricot(f) }
-          img = article_doc / '#strip'
-          images << Image.new(:image_url => "http://oglaf.com/#{img.attr('src')}",
-                              :alt_text => img.attr('title'),
-                              :original_url => original_url)
-        rescue OpenURI::HTTPError => e
-          finished = true
+        finished = false
+        images = []
+        while !finished
+          begin
+            original_url = "#{article_url}#{images.length + 1}"
+            article_doc = open(original_url) { |f| Hpricot(f) }
+            img = article_doc / '#strip'
+            images << Image.new(:image_url => "http://oglaf.com/#{img.attr('src')}",
+                                :alt_text => img.attr('title'),
+                                :original_url => original_url)
+          rescue OpenURI::HTTPError => e
+            finished = true
+          end
         end
-      end
 
-      puts "  Found #{images.length} images"
-      Article.create!(:nr => nr + 1, :site => Sites::OGLAF, :images => images)
+        puts "  Found #{images.length} images"
+        Article.create!(:nr => nr + 1, :site => Sites::OGLAF, :images => images)
+      end
     end
   end
+
+  desc "Update all"
+  task :all => [:oglaf, :asofterworld]
 end

@@ -20,15 +20,17 @@ a:hover {
 .article {
   width: 724px;
   margin: 0 auto;
-  padding: 1em 0 3em;
+  padding: 1em 0 1em;
   border-top: #777777 1px dotted;
   display: block; }
-  .article img {
-    border: solid 2px #f8f8f8; }
-  .article .heading {
-    float: left; }
-  .article .alt_text {
-    text-align: center; }
+  .article .image {
+    padding: 0 0 2em; }
+    .article .image img {
+      border: solid 2px #f8f8f8; }
+    .article .image .heading {
+      float: left; }
+    .article .image .alt_text {
+      text-align: center; }
 
 #content ul.spinner {
   display: none; }

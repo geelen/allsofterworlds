@@ -16,6 +16,6 @@ get '/:site/articles' do
 end
 
 def articles(site, from = nil)
-  from ||= Article.latest_nr(site)
-  Article.where(:site => site).order_by([:nr,:desc]).where(:nr.lte => from).limit(5)
+  from ||= 1
+  Article.where(:site => site).order_by([:nr,:asc]).where(:nr.gte => from).limit(5)
 end
