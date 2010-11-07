@@ -1,12 +1,23 @@
 (function(){
-  var loadMoreContent, proportionScrolled;
+  var currentPos, loadMore, moveNext, onScroll, proportionScrolled, shouldLoadMore, shouldMoveNext;
   proportionScrolled = function() {
-    var prop;
-    prop = ($(window).scrollTop() + $(window).height()) / $('body').height();
-    console.log(prop);
-    return prop;
+    return ($(window).scrollTop() + $(window).height()) / $('body').height();
   };
-  loadMoreContent = function() {
+  currentPos = function() {
+    var current;
+    current = $('div.article.current');
+    return current.offset().top + current.height() - $(window).scrollTop();
+  };
+  shouldMoveNext = function() {
+    return currentPos() < 150;
+  };
+  moveNext = function() {
+    return $('div.article.current').removeClass('current').next('div.article').addClass('current');
+  };
+  shouldLoadMore = function() {
+    return $('div.article.current ~ div.article').length < 4;
+  };
+  loadMore = function() {
     var from;
     if (!$('#content').hasClass('loading')) {
       $('#content').addClass('loading');
@@ -17,11 +28,15 @@
       });
     }
   };
+  onScroll = function() {
+    console.log(currentPos());
+    shouldMoveNext() ? moveNext() : null;
+    if (proportionScrolled() > 0.99) {
+      return loadMore();
+    }
+  };
   $(function() {
-    return $(window).bind('scroll', function() {
-      if (proportionScrolled() > 0.9) {
-        return loadMoreContent();
-      }
-    });
+    $(window).bind('scroll', onScroll);
+    return $('div.article:first').addClass('current');
   });
 })();

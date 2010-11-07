@@ -1,9 +1,20 @@
 proportionScrolled = ->
-  prop = ($(window).scrollTop() + $(window).height()) / $('body').height()
-  console.log(prop)
-  prop
+  ($(window).scrollTop() + $(window).height()) / $('body').height()
 
-loadMoreContent = ->
+currentPos = ->
+  current = $('div.article.current')
+  (current.offset().top + current.height() - $(window).scrollTop())
+
+shouldMoveNext = ->
+  currentPos() < 150
+
+moveNext = ->
+  $('div.article.current').removeClass('current').next('div.article').addClass('current')
+
+shouldLoadMore = ->
+  $('div.article.current ~ div.article').length < 4
+
+loadMore = ->
   if !$('#content').hasClass('loading')
     $('#content').addClass('loading')
     from = $('.article:last').attr('data_nr').replace(/\D/g, '')
@@ -12,9 +23,18 @@ loadMoreContent = ->
         $('#content .spinner').before(data)
       else
         console.log("failed to load more content")
+       $('#content').removeClass('loading')
 
-      $('#content').removeClass('loading')
+onScroll = ->
+  console.log currentPos()
+  if shouldMoveNext()
+    moveNext()
+
+  if proportionScrolled() > 0.99
+    loadMore()
+
 
 $ ->
-  $(window).bind 'scroll', -> loadMoreContent() if proportionScrolled() > 0.9
+  $(window).bind 'scroll', onScroll
+  $('div.article:first').addClass('current')
 
