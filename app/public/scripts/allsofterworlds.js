@@ -10,8 +10,8 @@
     var from;
     if (!$('#content').hasClass('loading')) {
       $('#content').addClass('loading');
-      from = $('section.article:last p.heading a.original').html().replace(/\D/g, '');
-      return $.get(("/articles?from=" + (parseInt(from) - 1)), {}, function(data, textStatus) {
+      from = $('.article:last').attr('data_nr').replace(/\D/g, '');
+      return $.get(("" + (window.location.pathname) + "/articles?from=" + (parseInt(from) - 1)), {}, function(data, textStatus) {
         textStatus === 'success' ? $('#content .spinner').before(data) : console.log("failed to load more content");
         return $('#content').removeClass('loading');
       });

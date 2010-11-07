@@ -6,8 +6,8 @@ proportionScrolled = ->
 loadMoreContent = ->
   if !$('#content').hasClass('loading')
     $('#content').addClass('loading')
-    from = $('section.article:last p.heading a.original').html().replace(/\D/g, '')
-    $.get "/articles?from=${parseInt(from) - 1}", {}, (data, textStatus) ->
+    from = $('.article:last').attr('data_nr').replace(/\D/g, '')
+    $.get "${window.location.pathname}/articles?from=${parseInt(from) - 1}", {}, (data, textStatus) ->
       if textStatus == 'success'
         $('#content .spinner').before(data)
       else

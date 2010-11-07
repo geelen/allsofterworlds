@@ -1,7 +1,9 @@
 - articles.each do |article|
-  %section[article]
-    %img{:src => "{article.image_url}", :title => article.alt_text}
-    %p.heading
-      %a.original{:href => "http://asofterworld.com/index.php?id=#{article.nr}"}
-        = "##{article.nr}"
-    %p.alt_text= article.alt_text
+  .article{:data_nr => article.nr}
+    - article.images.each_with_index do |image, image_nr|
+      %section[image]
+        %img{:src => image.image_url, :title => image.alt_text}
+        %p.heading
+          %a.original{:href => image.original_url}
+            = "##{article.nr}#{" (#{image_nr + 1})" if article.images.length > 1}"
+        %p.alt_text= image.alt_text

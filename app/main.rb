@@ -4,14 +4,18 @@ require 'haml'
 set :haml, :format => :html5
 
 get '/' do
-  haml :index, :locals => {:articles => articles}
+  redirect '/asofterworld'
 end
 
-get '/articles' do
-  haml :articles, :locals => {:articles => articles(params['from'].try(:to_i))}
+get '/:site' do
+  haml :index, :locals => {:articles => articles(params[:site])}
 end
 
-def articles(from = nil)
-  from ||= Article.latest_nr
-  Article.order_by([:nr,:desc]).where(:nr.lte => from).limit(5)
+get '/:site/articles' do
+  haml :articles, :locals => {:articles => articles(params[:site], params['from'].try(:to_i))}
+end
+
+def articles(site, from = nil)
+  from ||= Article.latest_nr(site)
+  Article.where(:site => site).order_by([:nr,:desc]).where(:nr.lte => from).limit(5)
 end
