@@ -41,11 +41,16 @@ namespace :update do
 
   desc "Oglaf"
   task :oglaf => :requires do
+    Article.delete_all
+
     rss = open("http://oglaf.com/feeds/rss/") { |f| Hpricot(f) }
     articles = (rss / 'item guid').map(&:inner_text).reverse
 
     # for now, just run the very first one
-    article_url = articles[0]
+    nr = 0
+    article_url = articles[nr]
+    name = article_url.split('/').last
+    puts "Processing article nr #{nr + 1}: #{name}"
 
     finished = false
     images = []
@@ -62,6 +67,7 @@ namespace :update do
       end
     end
 
-    Article.create!(:nr => 1, :images => images)
+    puts "  Found #{images.length} images"
+    Article.create!(:nr => nr + 1, :images => images)
   end
 end
