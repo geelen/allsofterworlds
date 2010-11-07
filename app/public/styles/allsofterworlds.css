@@ -18,13 +18,17 @@ a:hover {
   color: black; }
 
 .article {
-  width: 724px;
   margin: 0 auto;
   padding: 1em 0 1em;
   border-top: #777777 1px dotted;
-  display: block; }
+  display: block;
+  opacity: 0.9; }
+  body.asofterworld .article {
+    width: 724px; }
+  body.oglaf .article {
+    width: 764px; }
   .article.current {
-    background-color: #999999; }
+    opacity: 1; }
   .article .image {
     padding: 0 0 2em; }
     .article .image img {

@@ -12,7 +12,10 @@
     return currentPos() < 150;
   };
   moveNext = function() {
-    return $('div.article.current').removeClass('current').next('div.article').addClass('current');
+    $('div.article.current').removeClass('current').next('div.article').addClass('current');
+    if (shouldLoadMore()) {
+      return loadMore();
+    }
   };
   shouldLoadMore = function() {
     return $('div.article.current ~ div.article').length < 4;
@@ -29,7 +32,6 @@
     }
   };
   onScroll = function() {
-    console.log(currentPos());
     shouldMoveNext() ? moveNext() : null;
     if (proportionScrolled() > 0.99) {
       return loadMore();

@@ -10,6 +10,8 @@ shouldMoveNext = ->
 
 moveNext = ->
   $('div.article.current').removeClass('current').next('div.article').addClass('current')
+  if shouldLoadMore()
+    loadMore()
 
 shouldLoadMore = ->
   $('div.article.current ~ div.article').length < 4
@@ -26,13 +28,11 @@ loadMore = ->
        $('#content').removeClass('loading')
 
 onScroll = ->
-  console.log currentPos()
   if shouldMoveNext()
     moveNext()
 
   if proportionScrolled() > 0.99
     loadMore()
-
 
 $ ->
   $(window).bind 'scroll', onScroll
